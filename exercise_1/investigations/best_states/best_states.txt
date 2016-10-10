@@ -1,0 +1,30 @@
+Q2: What states are models of high-quality care?
+
+*Note: I'm using the same assumptions and methods as used in Q1 about best hospitals. The only difference is I'm not considering hospital type as this does not aggregate up to the state level well. I've included the assumption and method write-up from Q1 below in case you want to read through it again.*
+
+Assumptions: 
+I’m defining ‘high-quality care’ as low rates of complications, readmissions, and death. Ultimately, when you go to a hospital for a procedure, you don’t want to go back. Low percentages of complications, readmissions, and deaths are a direct measure that this goal is accomplished. 
+
+I considered including symptom and pain management but ultimately decided not to include these measures in my assessment. First, hospitals have been increasing recommending unnecessary procedures (Gawande, 2015) which, in my opinion, is no-value-added care. Second, symptom management is a spectrum from not indicative of high-quality care (eg percentage of employees given a flu vaccine) to highly indicative (eg time from door to doctor in emergency rooms). Trying to draw a line separating the spectrum was proving difficult to justify. 
+
+In addition, my analysis will consider hospitals by size. I’d expect larger hospitals (which are identified by number of procedures they perform) will have an increased probability of complications, readmissions, and death. 
+
+After an initial run of my query, I also imposed a restriction that states must have measurements in 4+ categories and have performed at least 100 procedures. The initial results favored small hospitals with few measurements. I concluded that the low scores were more indicative of low exposure instead of high-quality care and therefore justify exclusion.
+
+References: Gawande, A. (2015). Overkill. The New Yorker.
+
+Method: 
+To score a state on probability of complications, readmissions, and death, I take the average of their ‘score’ from the ReadmissionsAndDeath.csv and Complications.csv. Score is the rates of patients who have experienced the ‘measures’ in the .csv’s (eg % of Serious blood clots after surgery). A lower score is better. To better qualify results, I also consider total_score and score_cnt (how many measures is the state rated on).
+
+Answer:
+Looking at the results below, I see many more results to help support the ranking. By summing up hospitals per state, we look at the average care of the state. This is a better measure of state quality of care since it's what the average person can expect. Judging a state by it's top hospital would bias towards outliers where a state put all it's resources in one awesome hospital that only a small portion of residents will be able to access.
++-------+---------------+---------------+---------------+---------------+
+| State	| Average score	| Total score	| Score count	| Procedure cnt	|
++-------+---------------+---------------+---------------+---------------+
+| SD	| 8.828		| 2092.23	| 237		| 2417723.0	|
+| UT	| 8.9479	| 3919.2	| 438		| 4588902.0	|
+| ID	| 9.242		| 1996.28	| 216		| 1746829.0	|
+| MT	| 9.3519	| 1954.54	| 209		| 2310578.0	|
+| KS	| 9.4856	| 7009.83	| 739		| 1.6730737E7	|
++-------+---------------+---------------+---------------+---------------+
+

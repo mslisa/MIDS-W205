@@ -31,8 +31,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS surveys_temp (
   OverallRatingofHospitalAchievementPoints string,
   OverallRatingofHospitalImprovementPoints string,
   OverallRatingofHospitalDimensionScore string,
-  HCAHPSBaseScore string,
-  HCAHPSConsistencyScore string
+  HCAHPSBaseScore int,
+  HCAHPSConsistencyScore int
   )
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
@@ -43,16 +43,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/surveys';
 
-DROP TABLE IF EXISTS surveys;
-CREATE TABLE surveys
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  ProviderNumber providerID
-  ,HCAHPSBaseScore baseScore
-FROM surveys_temp
-SORT BY providerID;
 
 
 
@@ -71,7 +61,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS complications_temp (
   ,MeasureID string
   ,ComparedtoNational string
   ,Denominator string
-  ,Score string
+  ,Score int
   ,LowerEstimate string
   ,HigherEstimate string
   ,Footnote string
@@ -87,18 +77,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/complications';
 
-DROP TABLE IF EXISTS complications;
-CREATE TABLE complications
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  ProviderID providerID
-  ,MeasureID measureID
-  ,MeasureName measureName
-  ,ComparedtoNational complXnational
-FROM complications_temp
-SORT BY providerID, measureID;
 
 
 
@@ -117,7 +95,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS readmissions_temp (
   ,MeasureID string
   ,ComparedtoNational string
   ,Denominator string
-  ,Score string
+  ,Score int
   ,LowerEstimate string
   ,HigherEstimate string
   ,Footnote string
@@ -133,18 +111,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/readmissions';
 
-DROP TABLE IF EXISTS readmissions;
-CREATE TABLE readmissions
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  ProviderID providerID
-  ,MeasureID measureID
-  ,MeasureName measureName
-  ,ComparedtoNational readmisXnational
-FROM readmissions_temp
-SORT BY providerID, measureID;
 
 
 
@@ -172,72 +138,6 @@ WITH SERDEPROPERTIES (
 STORED AS TEXTFILE
 LOCATION '/user/w205/hospital_compare/hospitals';
 
-DROP TABLE IF EXISTS hospitals;
-CREATE TABLE hospitals
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  ProviderID providerID
-  ,HospitalName hospitalName
-  ,Address address
-  ,City city
-  ,State state
-  ,ZIPCode zip
-  ,CountyName county
-  ,PhoneNumber phone
-  ,HospitalType hospitalType
-  ,HospitalOwnership hospitalOwner
-  ,EmergencyServices emergency
-FROM hospitals_temp
-SORT BY providerID;
-
-
-
-
-DROP TABLE IF EXISTS effective_temp;
-CREATE EXTERNAL TABLE IF NOT EXISTS effective_temp (
-  ProviderID string
-  ,HospitalName string
-  ,Address string
-  ,City string
-  ,State string
-  ,ZIPCode string
-  ,CountyName string
-  ,PhoneNumber string
-  ,Condition string
-  ,MeasureID string
-  ,MeasureName string
-  ,Score string
-  ,Sample string
-  ,Footnote string
-  ,MeasureStartDate string
-  ,MeasureEndDate string
-
-  )
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
-WITH SERDEPROPERTIES (
-  "separatorChar" = ',',
-  "quoteChar" = '"',
-  "escapeChar" = '\\'
-  )
-STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/effective';
-
-DROP TABLE IF EXISTS effective;
-CREATE TABLE effective
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  ProviderID providerID
-  ,MeasureID measureID
-  ,MeasureName measureName
-  ,Condition condition
-  ,Score effectiveScore
-FROM effective_temp
-SORT BY providerID, measureID;
-
 
 
 
@@ -246,13 +146,13 @@ CREATE EXTERNAL TABLE IF NOT EXISTS procedures_temp (
   Provider_ID string
   ,Hospital_Name string
   ,Measure_ID string
-  ,Gastrointestinal string
-  ,Eye string
-  ,NervousSystem string
-  ,Musculoskeletal string
-  ,Skin string
-  ,Genitourinary string
-  ,Cardiovascular string
+  ,Gastrointestinal int
+  ,Eye int
+  ,NervousSystem int
+  ,Musculoskeletal int
+  ,Skin int
+  ,Genitourinary int
+  ,Cardiovascular int
   ,Start_Date string
   ,End_Date string
   )
@@ -263,21 +163,41 @@ WITH SERDEPROPERTIES (
   "escapeChar" = '\\'
   )
 STORED AS TEXTFILE
-LOCATION '/user/w205/hospital_compare/procedure';
+LOCATION '/user/w205/hospital_compare/procedures';
 
-DROP TABLE IF EXISTS procedures;
-CREATE TABLE procedures
-  ROW FORMAT DELIMITED
-  STORED AS TEXTFILE
-  AS
-SELECT
-  Provider_ID providerID
-  ,Gastrointestinal gastrointestinal
-  ,Eye eye
-  ,NervousSystem nervousSystem
-  ,Musculoskeletal musculoskeletal
-  ,Skin skin
-  ,Genitourinary genitourinary
-  ,Cardiovascular cardiovascular
-FROM procedures_temp
-SORT BY providerID;
+
+
+
+
+DROP TABLE IF EXISTS stars_temp;
+CREATE EXTERNAL TABLE IF NOT EXISTS stars_temp (
+  ProviderID string,
+  HospitalName string,
+  Address string,
+  City string,
+  State string,
+  ZIPCode string,
+  CountyName string,
+  PhoneNumber string,
+  HCAHPSMeasureID string,
+  HCAHPSQuestion string,
+  HCAHPSAnswerDescription string,
+  PatientSurveyStarRating int,
+  PatientSurveyStarRatingFootnote string,
+  HCAHPSAnswerPercent string,
+  HCAHPSAnswerPercentFootnote string,
+  NumberofCompletedSurveys string,
+  NumberofCompletedSurveysFootnote string,
+  SurveyResponseRatePercent string,
+  SurveyResponseRatePercentFootnote string,
+  MeasureStartDate string,
+  MeasureEndDate string
+  )
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+  "separatorChar" = ',',
+  "quoteChar" = '"',
+  "escapeChar" = '\\'
+  )
+STORED AS TEXTFILE
+LOCATION '/user/w205/hospital_compare/stars';
