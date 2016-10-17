@@ -1,0 +1,27 @@
+Q1: What hospitals are models of high-quality care?
+
+Assumptions: 
+I’m defining ‘high-quality care’ as low rates of complications, readmissions, and death. Ultimately, when you go to a hospital for a procedure, you don’t want to go back. Low percentages of complications, readmissions, and deaths are a direct measure that this goal is accomplished. 
+
+I considered including symptom and pain management but ultimately decided not to include these measures in my assessment. First, hospitals have been increasing recommending unnecessary procedures (Gawande, 2015) which, in my opinion, is no-value-added care. Second, symptom management is a spectrum from not indicative of high-quality care (eg percentage of employees given a flu vaccine) to highly indicative (eg time from door to doctor in emergency rooms). Trying to draw a line separating the spectrum was proving difficult to justify. 
+
+In addition, my analysis will consider hospitals by type and size. I’d expect a VA hospital to have a worse score than a children’s hospital since the average client age is much older and more likely to have a serious condition. Also, I’d expect larger hospitals (which are identified by number of procedures they perform) will have an increased probability of complications, readmissions, and death. 
+
+After an initial run of my query, I also imposed a restriction that the hospital must have measurements in 4+ categories and have performed at least 100 procedures. The initial results favored small hospitals with few measurements. I concluded that the low scores were more indicative of low exposure instead of high-quality care and therefore justify exclusion.
+
+References: Gawande, A. (2015). Overkill. The New Yorker.
+
+Method: 
+To score a hospital on probability of complications, readmissions, and death, I take the average of their ‘score’ from the ReadmissionsAndDeath.csv and Complications.csv. Score is the rates of patients who have experienced the ‘measures’ in the .csv’s (eg % of Serious blood clots after surgery). A lower score is better. To better qualify results, I also consider total_score and score_cnt (how many measures is the hospital rated on).
+
+Answer:
+Looking at the results below, I still see a top results with few measurements but the procedure count indicates good sized hospitals. I also see all top hospitals are Acute Care Hospitals. This is likely due to two causes: first, the only large hospitals which fit my restrictions are Acute Care or Critical Care; second, Acute Care hospitals will have patients with less sever ailments than Critical Care hospitals and are therefore less likely to have a compliation, readmission, or death. The results also support the reasoning behind triage - you can save the most lives if you focus on the serious cases which have a chance of survival.
++-------------------------------------------------------+-----------------------+---------------+---------------+---------------+---------------+
+| Hospital name						| Hospital type		| Average score	| Total score	| Score count	| Procedure cnt	|
++-------------------------------------------------------+-----------------------+---------------+---------------+---------------+---------------+
+| DOCTORS HOSPITAL LLC					| Acute Care Hospitals	| 1.6975	| 6.79		| 4		| 7268.0	|
+| CALLAHAN EYE HOSPITAL					| Acute Care Hospitals	| 1.7725	| 7.09		| 4		| 25184.0	|
+| SETON SOUTHWEST HOSPITAL				| Acute Care Hospitals	| 1.775		| 7.1		| 4		| 5672.0	|
+| PHILLIPS EYE INSTITUTE				| Acute Care Hospitals	| 1.78		| 7.12		| 4		| 31384.0	|
+| SURGERY SPECIALTY HOSPITALS OF AMERICA SE HOUSTON	| Acute Care Hospitals	| 1.7925	| 7.17		| 4		| 2188.0		|
++-------------------------------------------------------+-----------------------+---------------+---------------+---------------+---------------+

@@ -1,0 +1,23 @@
+Q3: Which procedures have the greatest variability between hospitals?
+
+Assumptions: 
+I’m defining variably as the standard deviation of scores by measure. Each measure speaks towards a specific type of procedure. Looking at the standard deviation will measure variability and better account for outliers than simply looking at the spread of measure scores. I am only looking at measures for complications, readmissions, and deaths as these are direct measures of a hospital’s goal of fixing patients.
+
+I considered including symptom and pain management but ultimately decided not to include these measures in my assessment. The main justification is that the managements are not procedures and therefore unrelated to this question. 
+
+After an initial run of my query, I also imposed a restriction that the hospital must have measurements in 4+ categories. The initial results favored small hospitals with few measurements. I concluded that the low variability was more indicative of low exposure instead of low variability and therefore justify exclusion.
+
+Method: 
+To score a hospital on probability of complications, readmissions, and death, I look at their ‘score’ from the ReadmissionsAndDeath.csv and Complications.csv. Score is the rates of patients who have experienced the ‘measures’ in the .csv’s (eg % of Serious blood clots after surgery). A lower score is better. To better qualify results, I also consider average score and score count (how many measures is the hospital rated on).
+
+Answer:
+The procedures with the highest variabilities are definitely the riskier measures within the data set and focus on mortality. They also are among the highest average scores (expect for blood clots). I see this as a reflection that the more difficult a procedure, the higher the variability will be. It's interesting to note that the highest variabilities are around three times those of the smallest variabilities.
++-----------------------------------------------+---------------+---------------+
+| Measure					| Average score	| Stddev score	|
++-----------------------------------------------+---------------+---------------+
+| Pneumonia (PN) 30-Day Mortality Rate		| 11.6171	| 1.7112	|
+| Death rate for stroke patients		| 14.8507	| 1.6508	|
+| Heart failure (HF) 30-Day Readmission Rate	| 22.0443	| 1.5948	|
+| Serious blood clots after surgery		| 4.1187	| 1.5331	|
+| Heart failure (HF) 30-Day Mortality Rate	| 11.6899	| 1.4289	|
++-----------------------------------------------+---------------+---------------+

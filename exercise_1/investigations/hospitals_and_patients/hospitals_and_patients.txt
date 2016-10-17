@@ -1,0 +1,32 @@
+Q4: Are average scores for hospital quality or procedural variability correlated with patient survey responses?
+
+*Note: My assumptions and methods are basically the same from Q1 and Q3. I’ve included the combined write-up below in case that makes grading easier*
+
+Assumptions: 
+I’m defining ‘high-quality care’ as low rates of complications, readmissions, and death. Ultimately, when you go to a hospital for a procedure, you don’t want to go back. Low percentages of complications, readmissions, and deaths are a direct measure that this goal is accomplished. I’m defining variably as the standard deviation of scores by measure. Each measure speaks towards a specific type of procedure. Looking at the standard deviation will measure variability and better account for outliers than simply looking at the spread of measure scores. 
+
+I considered including symptom and pain management but ultimately decided not to include these measures in my assessment. First, hospitals have been increasing recommending unnecessary procedures (Gawande, 2015) which, in my opinion, is no-value-added care. Second, symptom management is a spectrum from not indicative of high-quality care (eg percentage of employees given a flu vaccine) to highly indicative (eg time from door to doctor in emergency rooms). Trying to draw a line separating the spectrum was proving difficult to justify. 
+
+Patient survey responses are measured by star rating to overall recommendation of the hospital. I choose this measures to get at a patient's general feeling toward a hospital. If they like the hospital, they're more likely to recommend it. A recommendation for a business is one of the highest forms of praise and thus constitutes a good measure.
+
+In addition, my analysis will consider hospitals by type and size. I’d expect a VA hospital to have a worse score than a children’s hospital since the average client age is much older and more likely to have a serious condition. 
+
+After an initial run of my query, I also imposed a restriction that the hospital must have measurements in 4+ categories and have performed at least 100 procedures. The initial results favored small hospitals with few measurements. I concluded that the low scores were more indicative of low exposure instead of high-quality care or low variability and therefore justify exclusion.
+
+References: Gawande, A. (2015). Overkill. The New Yorker.
+
+Method: 
+To score a hospital on probability of complications, readmissions, and death, I take the average of their ‘score’ from the ReadmissionsAndDeath.csv and Complications.csv. The rates of patients who have experienced the ‘measures’ in the .csv’s (eg % of Serious blood clots after surgery). A lower score is better. To better qualify results, I also consider total_score and score_cnt (how many measures is the hospital rated on).
+
+To calculate the correlation of patient survey responses with average scores for hospital quality and procedure variability, I use sql’s corr() function. This returns the Pearson’s correlation coefficient.
+
+Answer:
+The restrictions I placed on number of procedures and measures removed Childrens and VA hospitals. I still support these restrictions as too few of either does not have enough data to accurately compare one hospital to another. Looking at the correlations, I see a very weak correlation between quality and recommendation and a weak correlation between variability and recommendation. This indicates that patients recommend hospitals on qualities other than their effectiveness of getting the patient safely through a procedure. This result would support the importance that doctors place on bed-side manners and overall management. I think it's interesting there's a slightly stronger correlation between variability and recommendation, but the strength is so small it's not effectivly important.
++-------------------------------+-----------------------+-----------------------+
+| Hospital type			| Corr Quality & Recom'd| Corr StdDev & Recom'd	|
++-------------------------------+-----------------------+-----------------------+
+| Acute Care Hospitals		| -0.04528332934195602	| -0.27638323566853357	|
+| Critical Access Hospitals	| -0.03485563159093903	| 0.20681364163720786	|
++-------------------------------+-----------------------+-----------------------+
+Reference: http://www.statstutor.ac.uk/resources/uploaded/pearsons.pdf
+
