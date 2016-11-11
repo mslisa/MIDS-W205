@@ -1,0 +1,11 @@
+Customer key:
+XG8smiZVV3bLCM9FJHHbwTkD1
+
+Customer secret
+oVzKthybDFdNA57Re0qzOALOIVtgsoDuXxMIOg6HWAwIxuISdq
+
+Access token
+4809297912-UtAraoE0R1Q0atdoYBeFRMKpvDmUI6mboYT10js
+
+Access token secret
+JZc28NljCUI8gdSkVKMD5XplVjk0Xz03UvMoPoIIKMzda
