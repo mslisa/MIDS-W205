@@ -1,5 +1,5 @@
 chmod 400 "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem"
-ssh -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-54-87-218-215.compute-1.amazonaws.com
+ssh -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-54-197-2-51.compute-1.amazonaws.com
 mount -t ext4 /dev/xvdf /data
 /data/start_postgres.sh
 
@@ -9,20 +9,17 @@ pip install tweepy
 sparse quickstart Tweetwordcount
 cd Tweetwordcount
 
-scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/ClassGitHub/w205-fall-16-labs-exercises/exercise_2/tweetwordcount root@ec2-54-87-218-215.compute-1.amazonaws.com:~/Tweetwordcount/
+scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/ClassGitHub/w205-fall-16-labs-exercises/exercise_2/tweetwordcount/* root@ec2-54-197-2-51.compute-1.amazonaws.com:~/Tweetwordcount/
+scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-54-197-2-51.compute-1.amazonaws.com:~/Tweetwordcount/ /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/ClassGitHub/w205-fall-16-labs-exercises/exercise_2/tweetwordcount/
 
 su - w205
 initdb -D /home/w205/data
 pg_ctl -D /home/w205/data -l logfile start
+exit
 sudo -u postgres createdb Tcount
 
 python create_TcountDB.py
+sparse run
 # spouts.tweets.Tweets -> "tweet"
 # bolts.parse.ParseTweet -> "word
 # bolts.wordcount.WordCounter -> "word" "count"
-
-python hello-stream-twitter.py
-
-python create_TcountDB.py
-
-#make a table called Tweetwordcount
