@@ -25,7 +25,9 @@ def get_counts(args = 2):
     return results
 
 # get words from command line
-args = int(sys.argv[1])
+args = sys.argv[1]
+if args:
+    args = int(args)
 
 # retrieve words from database
 results = get_counts(args = args)
