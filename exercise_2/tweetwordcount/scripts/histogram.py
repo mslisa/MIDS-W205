@@ -17,7 +17,10 @@ if not(args[0].isdigit() and args[1].isdigit()):
     print "Numeric inputs needed. Digit test on inputs return {}".format(map(str.isdigit, args))
     print "Please enter two input numbers, seperated by a space"
     sys.exit()
-    
+
+# convert args to digits
+args = [int(x) for x in args]
+
 # connect to postgres
 conn = psycopg2.connect(database="Tcount",
                         user="postgres",

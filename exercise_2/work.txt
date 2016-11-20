@@ -1,10 +1,10 @@
 chmod 400 "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem"
-ssh -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-54-164-167-69.compute-1.amazonaws.com
+ssh -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-52-90-125-148.compute-1.amazonaws.com
 mount -t ext4 /dev/xvdf /data
 /data/start_postgres.sh
 
-scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/GitHub_Repo/exercise_2/tweetwordcount root@ec2-54-164-167-69.compute-1.amazonaws.com:~/
-scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-54-164-167-69.compute-1.amazonaws.com:~/tweetwordcount/run.sh /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/GitHub_Repo/exercise_2/tweetwordcount/
+scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/GitHub_Repo/exercise_2/tweetwordcount root@ec2-52-90-125-148.compute-1.amazonaws.com:~/
+scp -r -i "/c/Users/lisam/Documents/CodingPrograms/AWS/MIDSW205.pem" root@ec2-52-90-125-148.compute-1.amazonaws.com:~/tweetwordcount/run.sh /c/Users/lisam/Documents/Berkeley/W205_GatherStoreData/GitHub_Repo/exercise_2/tweetwordcount/
 
 pip install --upgrade pip
 pip install psycopg2
