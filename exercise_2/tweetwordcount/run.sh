@@ -32,6 +32,6 @@ export LEIN_ROOT=1
 sparse run -n 'tweetwordcount' -t 120
 
 echo '---Sparse Run Complete---'
-echo 'If you'd like to try running something fun, try running:'
+echo 'If you would like to try running something fun, try running:'
 echo 'python ./scripts/finalresults.py'
 echo 'python ./scripts/histogram.py'
