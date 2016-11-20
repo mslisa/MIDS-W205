@@ -25,7 +25,7 @@ def get_counts(args = 20):
     return results
 
 # try to get args from command line otherwise set args to 20
-if args:
+try:
     args = int(sys.argv[1])
 except:
     args = 20
