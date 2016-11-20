@@ -29,9 +29,7 @@ python ./scripts/create_TcountDB.py
 echo 'Run sparse and stop after 60 seconds'
 export LEIN_ROOT=1
 
-sparse run -n 'tweetwordcount' &
-sleep 1m 
-sparse kill -n 'tweetwordcount'
+sparse run -n 'tweetwordcount' -t 120
 
 echo '---Sparse Run Complete---'
 echo 'If you'd like to try running something fun, try running:'

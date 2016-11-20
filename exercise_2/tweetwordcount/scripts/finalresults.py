@@ -35,7 +35,14 @@ if args:
 
     # print words and counts, one per line
     for word in args:
-        print "Total number of occurences of {}: {}".format(word, results[word])
+	#set initial word count to 0
+	cnt = 0
+
+	# if word found, update ocunt
+	if word in results.keys():
+		cnt = results[word]
+
+        print "Total number of occurences of {}: {}".format(word, cnt)
         
 # otherwise, return total number of word occurances for specific words 
 else:
