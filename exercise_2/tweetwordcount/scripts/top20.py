@@ -2,7 +2,7 @@
 import sys
 import psycopg2
 
-def get_counts(args = 2):
+def get_counts(args = 20):
  
     # connect to postgres
     conn = psycopg2.connect(database="Tcount",
@@ -24,11 +24,12 @@ def get_counts(args = 2):
     # return found word counts
     return results
 
-# get words from command line
-args = sys.argv[1]
+# try to get args from command line otherwise set args to 20
 if args:
-    args = int(args)
-
+    args = int(sys.argv[1])
+except:
+    args = 20
+    
 # retrieve words from database
 results = get_counts(args = args)
 
